@@ -1,0 +1,27 @@
+You're using useSearchParams() instead of useParams() because you're extracting a query parameter (the v parameter in the URL) rather than a URL path parameter.
+
+Difference Between useSearchParams and useParams
+useSearchParams():
+
+Used to access query parameters (e.g., ?v=12345 in a URL).
+Returns an object that lets you get query parameters using .get("paramName").
+useParams():
+
+Used for route parameters defined in the path (e.g., /watch/:videoId).
+Returns an object where the keys are the dynamic segments of the route.
+Example URLs and How They Work
+Query Parameter Example (Your case)
+
+URL: https://yourapp.com/watch?v=12345
+Code: searchParams.get("v") → Returns "12345"
+Requires useSearchParams()
+Route Parameter Example
+
+URL: https://yourapp.com/watch/12345
+Route: "/watch/:videoId"
+Code: const { videoId } = useParams(); → videoId === "12345"
+Requires useParams()
+Why useSearchParams() in Your Code?
+Your WatchPage component is expecting the YouTube video ID (v) as a query parameter (e.g., ?v=xyz123). So, useSearchParams() is the correct choice to retrieve that value.
+
+If your app used a URL path parameter instead (e.g., /watch/:videoId), then useParams() would be the correct choice.
