@@ -6,6 +6,7 @@ import { YOUTUBE_SEARCH_API } from '../utils/constants';
 
 const Head = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
   
 
   useEffect(() => {
@@ -39,7 +40,8 @@ const Head = () => {
     console.log("API CALL - " + searchQuery);
     const data = await fetch(YOUTUBE_SEARCH_API + searchQuery);
     const json = await data.json();
-    console.log(json[1]);
+    // console.log(json[1]);
+    setSuggestions(json[1]);
   }
 
 
@@ -64,9 +66,22 @@ const Head = () => {
       
 
       <div className='col-span-10 scroll-px-10 pl-64'>
-        <input className='w-1/2 border p-2 border-gray-400 rounded-l-full' type='text' value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}/>
+      <div>
+        <input className=' px-5 w-1/2 border p-2 border-gray-400 rounded-l-full' type='text' value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}/>
 
         <button className='border border-gray-400 px-5 py-2 rounded-r-full bg-gray-100'> 🔍</button>
+      </div>
+      <div className='fixed bg-white py-2 px-2 w-[30rem] shadow-lg rounded-lg border border-gray-100'>
+
+      <ul>
+        {suggestions.map((s) => (
+          <li key={s} className='py-2 px-3 shadow-sm hover:bg-gray-100'>🔍 {s}</li>
+        ))}
+        
+        
+      </ul>
+
+      </div>
       </div>
 
       <div className='col-span-1'>
