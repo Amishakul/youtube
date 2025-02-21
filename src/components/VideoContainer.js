@@ -25,7 +25,7 @@ const VideoContainer = () => {
                 isMenuOpen ? 'ml-64' : 'ml-0 lg:grid-cols-5'
             }`}
         >
-            {videos[0] && <AdVideoCard info={videos[0]} />}
+            {/* {videos[0] && <AdVideoCard info={videos[0]} />} */}
             {videos.map((video) => (
                 <Link key={video.id} to={'/watch?v=' + video.id}>
                     <VideoCard info={video} />
