@@ -7,6 +7,7 @@ import { YOUTUBE_SEARCH_API } from '../utils/constants';
 const Head = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
   
 
   useEffect(() => {
@@ -67,10 +68,14 @@ const Head = () => {
 
       <div className='col-span-10 scroll-px-10 pl-64'>
       <div>
-        <input className=' px-5 w-1/2 border p-2 border-gray-400 rounded-l-full' type='text' value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}/>
+        <input className=' px-5 w-1/2 border p-2 border-gray-400 rounded-l-full' type='text' value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
+          onFocus={() => setShowSuggestions(true)}
+          onBlur={() => setShowSuggestions(false)}
+        />
 
         <button className='border border-gray-400 px-5 py-2 rounded-r-full bg-gray-100'> 🔍</button>
       </div>
+      {showSuggestions && (
       <div className='fixed bg-white py-2 px-2 w-[30rem] shadow-lg rounded-lg border border-gray-100'>
 
       <ul>
@@ -82,6 +87,7 @@ const Head = () => {
       </ul>
 
       </div>
+      )}
       </div>
 
       <div className='col-span-1'>
