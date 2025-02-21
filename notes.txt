@@ -25,3 +25,15 @@ Why useSearchParams() in Your Code?
 Your WatchPage component is expecting the YouTube video ID (v) as a query parameter (e.g., ?v=xyz123). So, useSearchParams() is the correct choice to retrieve that value.
 
 If your app used a URL path parameter instead (e.g., /watch/:videoId), then useParams() would be the correct choice.
+
+A function that takes a component and returns a component is known as higher order component.
+
+Higher order component takes an existing components and modifies it a little. Taking an existing component and returning a modification of it.
+
+Important Interview Question: Build a Search Bar.
+
+The search bar on youtube uses search api to show the suggestions to user when user types something. It is making an api call on each and every key press on the search bar.
+
+SearchQuery is const but still we can change it because it is the new variable everytime when its re-rendering.
+
+

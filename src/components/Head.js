@@ -1,8 +1,48 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { toggleMenu } from '../utils/appSlice';
+import { useState } from 'react';
+import { YOUTUBE_SEARCH_API } from '../utils/constants';
 
 const Head = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  
+
+  useEffect(() => {
+    // api call
+    
+
+    // make an api call after every key press but if the difference between 2 api calls is < 200, decline the api call
+
+    const timer = setTimeout(() => getSearchSuggestions(), 200); // the api call is not make right away it is made after 200ms
+
+    return () => {
+      clearTimeout(timer);
+    }; // this function is return when the component is unmounted, refreshing i.e. keystroke "ip" is pressed before the previous keystroke timeout expires. 
+
+  }, [searchQuery]) // everytime my searchquery changes make an api call, hence in dependency array write searchquery
+
+  // key - "i" is pressed
+  // - render the component
+  // - useEffect(); is called
+  // start timer => make api call after 200ms
+
+  // key - "ip" is pressed
+  // if i press "ip" before 200ms timer expries of the previous keystroke, it will destory/clear the previous keystroke component.(will call useEffect return method)
+  // - re-render the component
+  // useEffect() is called
+  // start timer => make api call after 200ms (this timer is different than the above timer)
+
+  // setTimeout(200) - make an API call after 200ms, if the next keystroke is pressed after 200ms.
+
+  const getSearchSuggestions = async () => {
+    console.log("API CALL - " + searchQuery);
+    const data = await fetch(YOUTUBE_SEARCH_API + searchQuery);
+    const json = await data.json();
+    console.log(json[1]);
+  }
+
+
   const dispatch = useDispatch();
 
   const toggleMenuHandler = () => {
@@ -24,7 +64,8 @@ const Head = () => {
       
 
       <div className='col-span-10 scroll-px-10 pl-64'>
-        <input className='w-1/2 border p-2 border-gray-400 rounded-l-full' type='text'/>
+        <input className='w-1/2 border p-2 border-gray-400 rounded-l-full' type='text' value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}/>
+
         <button className='border border-gray-400 px-5 py-2 rounded-r-full bg-gray-100'> 🔍</button>
       </div>
 

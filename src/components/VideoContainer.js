@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux'; // Import useSelector to access store
 import { YOUTUBE_VIDEOS_API } from '../utils/constants';
-import VideoCard from './VideoCard';
+import VideoCard, {AdVideoCard} from './VideoCard';
 import { Link } from 'react-router-dom';
 
 const VideoContainer = () => {
@@ -25,6 +25,7 @@ const VideoContainer = () => {
                 isMenuOpen ? 'ml-64' : 'ml-0 lg:grid-cols-5'
             }`}
         >
+            {videos[0] && <AdVideoCard info={videos[0]} />}
             {videos.map((video) => (
                 <Link key={video.id} to={'/watch?v=' + video.id}>
                     <VideoCard info={video} />
