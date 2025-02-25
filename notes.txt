@@ -36,4 +36,6 @@ The search bar on youtube uses search api to show the suggestions to user when u
 
 SearchQuery is const but still we can change it because it is the new variable everytime when its re-rendering.
 
+... (Spread operator) -> It is used to merge two different objects.
 
+Live Chat >>>>>> Infinite Scroll >>>>>> Pagination

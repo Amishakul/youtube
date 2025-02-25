@@ -1,13 +1,25 @@
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { toggleMenu } from '../utils/appSlice';
 import { useState } from 'react';
 import { YOUTUBE_SEARCH_API } from '../utils/constants';
+import { cacheResults } from '../utils/searchSlice';
 
 const Head = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+
+  const searchCache = useSelector((store) => store.search);
+  const dispatch = useDispatch()
+
+  /*
+      searchCache = {
+      "iphone": ["iphone 11", "iphone 14"]
+      }
+
+      searchQuery = iphone
+  */
   
 
   useEffect(() => {
@@ -16,7 +28,13 @@ const Head = () => {
 
     // make an api call after every key press but if the difference between 2 api calls is < 200, decline the api call
 
-    const timer = setTimeout(() => getSearchSuggestions(), 200); // the api call is not make right away it is made after 200ms
+    const timer = setTimeout(() =>  {
+      if (searchCache[searchQuery]) {
+        setSuggestions(searchCache[searchQuery])
+        } else {
+          getSearchSuggestions();
+         } 
+    }, 200);  // the api call is not make right away it is made after 200ms
 
     return () => {
       clearTimeout(timer);
@@ -43,10 +61,15 @@ const Head = () => {
     const json = await data.json();
     // console.log(json[1]);
     setSuggestions(json[1]);
+
+    // update in my cache after making api call
+    dispatch(cacheResults({
+      [searchQuery] : json[1]
+    }));
   }
 
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const toggleMenuHandler = () => {
     dispatch(toggleMenu());
