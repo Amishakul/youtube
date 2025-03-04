@@ -5,7 +5,7 @@ import Button from './Button'
 
 const ButtonList = () => {
   return (
-    <div className='flex px-[30%]'>
+    <div className='flex px-96'>
       <Button name ="Gaming"/>
       <Button name ="Songs"/>
       <Button name ="Live"/>
