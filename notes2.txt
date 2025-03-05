@@ -9,3 +9,14 @@ In simple terms, it helps React remember the value of something so it doesn’t 
 4. useMemo caches the result(value) of calculation between re-renders
 
 5. useCallback hook will cache the function between re-renders
+
+6. UseRef -> wanted a value to get update but you don’t want to render it
+
+7. ref is not like this => ref = 0 
+8. But it is like this, ref = {current: 0} -> object
+
+9. Ref doesn’t renders but it's value remains persistance behind the scenes.
+
+10. Difference between Let, Ref and State
+
+11. UseRef will hold the value between states
