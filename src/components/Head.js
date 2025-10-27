@@ -99,7 +99,7 @@ const Head = () => {
         <button className='border border-gray-400 px-5 py-2 rounded-r-full bg-gray-100'> 🔍</button>
       </div>
       {showSuggestions && (
-      <div className='fixed bg-white py-2 px-2 w-[30rem] shadow-lg rounded-lg border border-gray-100'>
+      <div className='fixed bg-white py-0 px-2 w-[30rem] shadow-lg rounded-lg border border-gray-100 cursor-pointer'>
 
       <ul>
         {suggestions.map((s) => (
