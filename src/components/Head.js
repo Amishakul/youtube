@@ -5,6 +5,8 @@ import { useState } from 'react';
 import { YOUTUBE_SEARCH_API } from '../utils/constants';
 import { cacheResults } from '../utils/searchSlice';
 
+import { useNavigate } from 'react-router-dom';
+
 const Head = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
@@ -12,6 +14,8 @@ const Head = () => {
 
   const searchCache = useSelector((store) => store.search);
   const dispatch = useDispatch()
+
+  const navigate = useNavigate();
 
   /*
       searchCache = {
@@ -77,6 +81,23 @@ const Head = () => {
   };
 
 
+  // 🔹 When Enter is pressed in input
+  const handleSearch = (e) => {
+    if (e.key === "Enter" && searchQuery.trim() !== "") {
+      navigate(`/results?search_query=${encodeURIComponent(searchQuery.trim())}`);
+      setShowSuggestions(false);
+    }
+  };
+
+  // 🔹 When user clicks a suggestion
+  const handleSuggestionClick = (suggestion) => {
+    setSearchQuery(suggestion);
+    navigate(`/results?search_query=${encodeURIComponent(suggestion)}`);
+    setShowSuggestions(false);
+  };
+
+
+
   return (
     <div className='grid grid-flow-col p-5 m-2 shadow-lg bg-white sticky top-0 z-50 bg-opacity-100'>
       <div className='flex col-span-1'>
@@ -94,16 +115,23 @@ const Head = () => {
         <input className=' px-5 w-1/2 border p-2 border-gray-400 rounded-l-full' type='text' value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
           onFocus={() => setShowSuggestions(true)}
           onBlur={() => setShowSuggestions(false)}
+
+          onKeyDown={handleSearch} // 🔹 added
+            placeholder="Search"
         />
 
-        <button className='border border-gray-400 px-5 py-2 rounded-r-full bg-gray-100'> 🔍</button>
+        <button className='border border-gray-400 px-5 py-2 rounded-r-full bg-gray-100' 
+        
+        onClick={() => handleSuggestionClick(searchQuery)}> 🔍</button>
       </div>
       {showSuggestions && (
       <div className='fixed bg-white py-0 px-2 w-[30rem] shadow-lg rounded-lg border border-gray-100 cursor-pointer'>
 
       <ul>
         {suggestions.map((s) => (
-          <li key={s} className='py-2 px-3 shadow-sm hover:bg-gray-100'>🔍 {s}</li>
+          <li key={s} className='py-2 px-3 shadow-sm hover:bg-gray-100' 
+          
+          onMouseDown={() => handleSuggestionClick(s)} >🔍 {s}</li>
         ))}
         
         

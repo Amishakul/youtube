@@ -8,10 +8,23 @@ import MainContainer from './components/MainContainer';
 import WatchPage from './components/WatchPage';
 // import Demo from './components/Demo';
 // import Demo2 from './components/Demo2';
+import VideoContainer from './components/VideoContainer';
+
+const AppLayout = () => {
+  return (
+    <>
+      <Head />
+      <Body />
+    </>
+  );
+};
+
 
 const appRouter = createBrowserRouter([{
   path: "/",
-  element: <Body/>,
+  // element: <Body/>,
+
+  element: <AppLayout />,
   children: [
     {
       path: "/",
@@ -21,6 +34,11 @@ const appRouter = createBrowserRouter([{
       path: "watch",
       element: <WatchPage/>
     },
+
+    {
+        path: "results",
+        element: <VideoContainer />,
+      },
     // {
     //   path: "demo",
     //   element: <Demo/>
@@ -36,9 +54,9 @@ const appRouter = createBrowserRouter([{
 function App() {
   return (
     <Provider store={store}>
-    <div>
+    {/* <div> */}
       
-      <Head/>
+      {/* <Head/> */}
       <RouterProvider router={appRouter}/>
 
       {/* 1. Header
@@ -52,7 +70,7 @@ function App() {
        */}
 
        
-    </div>
+    {/* </div> */}
     </Provider>
   );
 }
