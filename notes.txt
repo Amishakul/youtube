@@ -1,0 +1,43 @@
+You're using useSearchParams() instead of useParams() because you're extracting a query parameter (the v parameter in the URL) rather than a URL path parameter.
+
+Difference Between useSearchParams and useParams
+useSearchParams():
+
+Used to access query parameters (e.g., ?v=12345 in a URL).
+Returns an object that lets you get query parameters using .get("paramName").
+useParams():
+
+Used for route parameters defined in the path (e.g., /watch/:videoId).
+Returns an object where the keys are the dynamic segments of the route.
+Example URLs and How They Work
+Query Parameter Example (Your case)
+
+URL: https://yourapp.com/watch?v=12345
+Code: searchParams.get("v") → Returns "12345"
+Requires useSearchParams()
+Route Parameter Example
+
+URL: https://yourapp.com/watch/12345
+Route: "/watch/:videoId"
+Code: const { videoId } = useParams(); → videoId === "12345"
+Requires useParams()
+Why useSearchParams() in Your Code?
+Your WatchPage component is expecting the YouTube video ID (v) as a query parameter (e.g., ?v=xyz123). So, useSearchParams() is the correct choice to retrieve that value.
+
+If your app used a URL path parameter instead (e.g., /watch/:videoId), then useParams() would be the correct choice.
+
+A function that takes a component and returns a component is known as higher order component.
+
+Higher order component takes an existing components and modifies it a little. Taking an existing component and returning a modification of it.
+
+Important Interview Question: Build a Search Bar.
+
+The search bar on youtube uses search api to show the suggestions to user when user types something. It is making an api call on each and every key press on the search bar.
+
+SearchQuery is const but still we can change it because it is the new variable everytime when its re-rendering.
+
+... (Spread operator) -> It is used to merge two different objects.
+
+Live Chat >>>>>> Infinite Scroll >>>>>> Pagination
+
+unshift -> push in from the first
